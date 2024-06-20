@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Confetti from './components/Confetti';
-import { useSpring, SpringConfig, animated, SpringValue } from 'react-spring';
-import Balloons from './components/Balloons';
+import { useSpring, animated, SpringValue } from 'react-spring'; // Import necessary components from react-spring
+import Balloons from './components/Balloons'; // Import the Balloons component
 
 interface TimeLeft {
   days: number;
@@ -12,10 +12,8 @@ interface TimeLeft {
 }
 
 const App: React.FC = () => {
-
-  const fade: {
-    opacity: SpringValue<number>;
-  } = useSpring({ opacity: 1, config: { duration: 1000 } });
+  // Define animated style object with SpringValue
+  const fade: { opacity: SpringValue<number> } = useSpring({ opacity: 1, config: { duration: 1000 } });
 
   const targetDate = new Date('2024-06-21T00:00:00+03:00').getTime();
 
@@ -49,7 +47,7 @@ const App: React.FC = () => {
       const newTimeLeft = calculateTimeLeft();
       setTimeLeft(newTimeLeft);
 
-      if (Object.keys(newTimeLeft).every(key => newTimeLeft[key as keyof TimeLeft] === 0)) {
+      if (Object.values(newTimeLeft).every(value => value === 0)) {
         setShowConfetti(true);
         clearInterval(timer);
       }
@@ -73,7 +71,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       {showConfetti && <Confetti />}
-      <Balloons />
+      <Balloons /> {/* Render the Balloons component here */}
       <animated.div style={fade}>
         {timeLeft.days > 0 || timeLeft.hours > 0 || timeLeft.minutes > 0 || timeLeft.seconds > 0 ? (
           <span>
@@ -86,7 +84,7 @@ const App: React.FC = () => {
             <button onClick={fetchNewAdvice}>Get New Advice</button>
           </>
         )}
-      </animated.div>   
+      </animated.div>
     </div>
   );
 };
