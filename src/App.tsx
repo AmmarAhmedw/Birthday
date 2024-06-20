@@ -1,42 +1,55 @@
-// src/App.tsx
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Confetti from './components/Confetti';
-import { useSpring, animated } from 'react-spring';
+import { useSpring, SpringConfig, animated, SpringValue } from 'react-spring';
 import Balloons from './components/Balloons';
 
+interface TimeLeft {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
 const App: React.FC = () => {
-  // Animations
-  const fade = useSpring({ from: { opacity: 0 }, to: { opacity: 1 }, config: { duration: 1000 } });
+
+  const fade: {
+    opacity: SpringValue<number>;
+  } = useSpring({ opacity: 1, config: { duration: 1000 } });
 
   const targetDate = new Date('2024-06-21T00:00:00+03:00').getTime();
 
-  const calculateTimeLeft = () => {
+  const calculateTimeLeft = (): TimeLeft => {
     const difference = targetDate - new Date().getTime();
-    let timeLeft = {};
+    let timeLeft: TimeLeft = {
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    };
 
     if (difference > 0) {
       timeLeft = {
         days: Math.floor(difference / (1000 * 60 * 60 * 24)),
         hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
         minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((difference % (1000 * 60)) / 1000)
+        seconds: Math.floor((difference % (1000 * 60)) / 1000),
       };
     }
 
     return timeLeft;
   };
 
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-  const [advice, setAdvice] = useState('');
-  const [showConfetti, setShowConfetti] = useState(false);
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateTimeLeft());
+  const [advice, setAdvice] = useState<string>('');
+  const [showConfetti, setShowConfetti] = useState<boolean>(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
       const newTimeLeft = calculateTimeLeft();
       setTimeLeft(newTimeLeft);
 
-      if (Object.keys(newTimeLeft).length === 0) {
+      if (Object.keys(newTimeLeft).every(key => newTimeLeft[key as keyof TimeLeft] === 0)) {
         setShowConfetti(true);
         clearInterval(timer);
       }
@@ -45,11 +58,11 @@ const App: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const fetchNewAdvice = () => {
+  const fetchNewAdvice = (): void => {
     fetch('https://api.adviceslip.com/advice')
       .then(response => response.json())
       .then(data => {
-        const newAdvice = data.slip.advice;
+        const newAdvice: string = data.slip.advice;
         setAdvice(newAdvice);
       })
       .catch(error => {
@@ -73,12 +86,9 @@ const App: React.FC = () => {
             <button onClick={fetchNewAdvice}>Get New Advice</button>
           </>
         )}
-      </animated.div>
+      </animated.div>   
     </div>
   );
 };
-
-
-/*<h1>asdasdasdas</h1>*/
 
 export default App;
