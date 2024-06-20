@@ -1,0 +1,73 @@
+/* src/components/Balloons.css */
+.balloon-line {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    
+  }
+  
+  .green-line {
+    left: 5%;
+  }
+  
+  .pink-line {
+    right: 5%;
+  }
+  
+  .balloon-wrapper {
+    margin: 15px; /* Adjust the margin here */
+    animation: float 2s ease-in-out infinite;
+  }
+  
+  .balloon {
+    width: 30px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  .green {
+    background-color: #1b3623;
+  }
+  
+  .pink {
+    background-color: #f4a6c6;
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+
+
+.line {
+    width: 2px;
+    height: 30px;
+    background-color: pink;
+    margin: 0 auto;
+    transform: rotate(90deg); /* Rotate the line to be vertical */
+    position: relative;
+    animation: curlyLine 1s infinite linear alternate;
+  }
+  
+  @keyframes curlyLine {
+    0% {
+      transform: rotate(180deg) translateY(0);
+    }
+    50% {
+      transform: rotate(180deg) translateY(-5px);
+    }
+    100% {
+      transform: rotate(180deg) translateY(0);
+    }
+  }
+  
