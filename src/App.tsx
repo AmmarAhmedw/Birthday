@@ -79,7 +79,7 @@ const App: React.FC = () => {
           </span>
         ) : (
           <>
-            <h1 className="title">Happy Birthday, Oona!</h1>
+            <h1 className="title">Happy Birthday!</h1>
             <p className="advice">{advice}</p>
             <button onClick={fetchNewAdvice}>Get New Advice</button>
           </>
