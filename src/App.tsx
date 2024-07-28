@@ -15,7 +15,7 @@ const App: React.FC = () => {
   // Define animated style object with SpringValue
   const fade: { opacity: SpringValue<number> } = useSpring({ opacity: 1, config: { duration: 1000 } });
 
-  const targetDate = new Date('2024-06-21T00:00:00+03:00').getTime();
+  const targetDate = new Date('2024-08-13T00:00:00+05:00').getTime();
 
   const calculateTimeLeft = (): TimeLeft => {
     const difference = targetDate - new Date().getTime();
@@ -79,7 +79,7 @@ const App: React.FC = () => {
           </span>
         ) : (
           <>
-            <h1 className="title">Happy Birthday!</h1>
+            <h1 className="title">Happy Birthday Babe!</h1>
             <p className="advice">{advice}</p>
             <button onClick={fetchNewAdvice}>Get New Advice</button>
           </>
